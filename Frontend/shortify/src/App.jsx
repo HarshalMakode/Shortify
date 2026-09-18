@@ -40,7 +40,7 @@ function App() {
 
         <section className='w-full max-w-3xl flex flex-col'>
             <span className='text-[25px] font-bold text-gray-600'>Simple and fast URL shortener!</span>
-            <span>ShortURL allows to shorten long links from Instagram, Facebook, YouTube, Twitter, Linked In, WhatsApp, TikTok, blogs and any domain name. Just paste the long URL and click the Shorten URL button. On the next page, copy the shortened URL and share it on sites, chat and emails. After shortening the URL, check how many clicks it received.</span>
+            <span>ShortURL allows to shorten long links from <a href="https://www.instagram.com/" className='text-blue-500'>Instagram</a>, <a href="https://www.facebook.com" className='text-blue-500'>Facebook</a>, <a href="https://www.youtube.com" className='text-blue-500'>YouTube</a>, <a href="https://x.com" className='text-blue-500'>Twitter</a>, <a href="https://in.linkedin.com" className='text-blue-500'>Linked In</a>, <a href="https://www.whatsapp.com" className='text-blue-500'>WhatsApp</a>, <a href="https://www.tiktok.com" className='text-blue-500'>TikTok</a>, <a href="https://www.blogger.com/" className='text-blue-500'>blogs</a> and any <a href="/" className='text-blue-500'>domain name</a>. Just paste the long URL and click the Shorten URL button. On the next page, copy the shortened URL and share it on sites, chat and emails. After shortening the URL, check <a href="http://localhost:5173/url-click-counter" className='text-blue-500'>how many clicks it received</a>.</span>
         </section>
         
         <section className='w-full max-w-3xl flex flex-col'>
@@ -90,7 +90,7 @@ function App() {
 
       <div className='w-full bg-blue-400 h-1 mt-10'></div>
       <footer className='w-full px-10 py-5 flex flex-col bg-[#333]'>
-        <span className='flex justify-center text-white'>© 2026 ShortUrl.at - Tool to shorten a long link</span>
+        <span className='flex justify-center text-white'>© 2026 Shortify.at - Tool to shorten a long link</span>
         <span className='flex justify-center text-white mb-2'>Powered by <span className='ml-1 font-semibold text-blue-500'>MrHypix</span></span>
         <div className='flex flex-col lg:flex-row font-semibold justify-center text-blue-500 divide-y lg:divide-y-0 lg:divide-x divide-black'>
           <a className='px-3 py-2' href="/">ShortURL</a>
