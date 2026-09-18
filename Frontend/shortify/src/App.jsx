@@ -1,110 +1,16 @@
-import { useState } from 'react'
-import images from "./constants/images"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
 
 function App() {
   return (
-    <div className='min-h-screen flex flex-col bg-cyan-40'>
-      <header className='flex justify-center items-baseline w-full px-3'>
-        <a href='/' class="text-6xl font-bold text-blue-400 px-2 py-10">Shortify</a>
-        <span className='font-bold '>by</span>
-        <span className='ml-1 font-bold text-blue-500 '>MrHypix</span>
-      </header>
+    <BrowserRouter>
+      <Routes>
 
-      <main className='flex flex-col items-center gap-5 mx-6'>
-        <section className='w-full max-w-3xl flex flex-col items-center bg-white py-5 rounded-2xl border border-mist-300 shadow-lg p-13'>
-          <span className='text-4xl font-bold text-gray-600'>Paste the URL to be shortened</span>
+        <Route path="/" element={<Home />} />
 
-          <form action="submit" className='w-full flex border border-gray-200 m-5 rounded shadow'>
-            <input type="text" className='flex-1 pl-5 py-2.5' placeholder='Enter the link' />
-            <button className='bg-blue-400 font-semibold text-white p-2 rounded-r'>Shorten URL</button>
-          </form>
-
-          <span className='flex flex-col items-center'>
-            <span>Shortify is a free tool to shorten URLs and generate short links</span>
-            <span>URL shortener allows to create a shortened link making it easy to share</span>
-          </span>
-
-        </section>
-
-        <section className='w-full max-w-3xl flex flex-col items-center bg-white py-5 rounded-2xl border border-mist-300 shadow-lg p-10 gap-5'>
-          <span className='text-2xl font-bold text-gray-600'>Want More? Try Premium Features!</span>
-
-          <span className='flex flex-col items-center'>
-            <span>Custom short links, powerful dashboard, detailed analytics, API, UTM builder, QR codes,</span>
-            <span>browser extension, app integrations and support. Start Free</span>
-          </span>
-
-          <button className='bg-blue-400 font-semibold text-white py-3 px-5 rounded'>Create Account</button>
-
-        </section>
-
-        <section className='w-full max-w-3xl flex flex-col'>
-            <span className='text-[25px] font-bold text-gray-600'>Simple and fast URL shortener!</span>
-            <span>ShortURL allows to shorten long links from <a href="https://www.instagram.com/" className='text-blue-500'>Instagram</a>, <a href="https://www.facebook.com" className='text-blue-500'>Facebook</a>, <a href="https://www.youtube.com" className='text-blue-500'>YouTube</a>, <a href="https://x.com" className='text-blue-500'>Twitter</a>, <a href="https://in.linkedin.com" className='text-blue-500'>Linked In</a>, <a href="https://www.whatsapp.com" className='text-blue-500'>WhatsApp</a>, <a href="https://www.tiktok.com" className='text-blue-500'>TikTok</a>, <a href="https://www.blogger.com/" className='text-blue-500'>blogs</a> and any <a href="/" className='text-blue-500'>domain name</a>. Just paste the long URL and click the Shorten URL button. On the next page, copy the shortened URL and share it on sites, chat and emails. After shortening the URL, check <a href="http://localhost:5173/url-click-counter" className='text-blue-500'>how many clicks it received</a>.</span>
-        </section>
-        
-        <section className='w-full max-w-3xl flex flex-col'>
-            <span className='text-[25px] font-bold text-gray-600'>Shorten, share and track</span>
-            <span>Your shortened URLs can be used in publications, documents, advertisements, blogs, forums, instant messages, and other locations. Track statistics for your business and projects by monitoring the number of hits from your URL with our click counter.</span>
-        </section>
-
-        <div className='max-w-4xl grid grid-cols-3 gap-5 mt-5'>
-          <div className='flex flex-col items-center text-center'>
-            <img src={images.like} className='w-20 h-20'/>
-            <span className='text-xl font-bold text-gray-600'>Easy</span>
-            <span>ShortURL is easy and fast, enter the long link to get your shortened link</span>
-          </div>
-
-          <div className='flex flex-col items-center text-center'>
-            <img src={images.url}/>
-            <span className='text-xl font-bold text-gray-600'>Shortened</span>
-            <span>Use any link, no matter what size, ShortURL always shortens</span>
-          </div>
-
-          <div className='flex flex-col items-center text-center'>
-            <img src={images.secure}/>
-            <span className='text-xl font-bold text-gray-600'>Secure</span>
-            <span>It is fast and secure, our service has HTTPS protocol and data encryption</span>
-          </div>
-
-          <div className='flex flex-col items-center text-center'>
-            <img src={images.statistics}/>
-            <span className='text-xl font-bold text-gray-600'>Statistics</span>
-            <span>Check the number of clicks that your shortened URL received</span>
-          </div>
-
-          <div className='flex flex-col items-center text-center'>
-            <img src={images.unique}/>
-            <span className='text-xl font-bold text-gray-600'>Reliable</span>
-            <span>All links that try to disseminate spam, viruses and malware are deleted</span>
-          </div>
-
-          <div className='flex flex-col items-center text-center'>
-            <img src={images.responsive}/>
-            <span className='text-xl font-bold text-gray-600'>Devices</span>
-            <span>Compatible with smartphones, tablets and desktop</span>
-          </div>
-
-        </div>
-      </main>
-
-      <div className='w-full bg-blue-400 h-1 mt-10'></div>
-      <footer className='w-full px-10 py-5 flex flex-col bg-[#333]'>
-        <span className='flex justify-center text-white'>© 2026 Shortify.at - Tool to shorten a long link</span>
-        <span className='flex justify-center text-white mb-2'>Powered by <span className='ml-1 font-semibold text-blue-500'>MrHypix</span></span>
-        <div className='flex flex-col lg:flex-row font-semibold justify-center text-blue-500 divide-y lg:divide-y-0 lg:divide-x divide-black'>
-          <a className='px-3 py-2' href="/">ShortURL</a>
-          <a className='px-3 py-2' href="">URL Click Counter</a>
-          <a className='px-3 py-2' href="">Unshorten URL</a>
-          <a className='px-3 py-2' href="">Report Malicious URL</a>
-          <a className='px-3 py-2' href="">Terms of Service</a>
-          <a className='px-3 py-2' href="">Privacy</a>
-          <a className='px-3 py-2' href="">Contact</a>
-        </div>
-      </footer>
-
-    </div>
-  )
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
