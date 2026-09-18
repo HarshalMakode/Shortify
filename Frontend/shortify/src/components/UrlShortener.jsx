@@ -6,7 +6,7 @@ function UrlShortener() {
         Paste the URL to be shortened
       </span>
 
-      <form className="w-full flex border border-gray-200 m-5 rounded shadow">
+      <form className="w-full flex flex-col sm:flex-row border border-gray-200 m-5 rounded shadow">
         <input
           type="text"
           className="flex-1 pl-5 py-2.5"
