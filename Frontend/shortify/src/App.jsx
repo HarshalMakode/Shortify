@@ -1,12 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import ShortenURl from "./pages/ShortenURl";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        
+        <Route path="/shortenurl" element={<ShortenURl/>} />
       </Routes>
     </BrowserRouter>
   );

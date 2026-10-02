@@ -1,4 +1,17 @@
+import { useState } from "react";
+
 function UrlShortener() {
+  const [url, setUrl] = useState("");
+  const [shortUrl, setShortUrl] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const response = await shortenUrl(url);
+
+    setShortUrl(response.shortUrl);
+  };
+
   return (
     <section className="w-full max-w-3xl flex flex-col items-center bg-white py-5 rounded-2xl border border-mist-300 shadow-lg p-13">
 
@@ -6,14 +19,16 @@ function UrlShortener() {
         Paste the URL to be shortened
       </span>
 
-      <form className="w-full flex flex-col sm:flex-row border border-gray-200 m-5 rounded shadow">
+      <form onSubmit={handleSubmit} className="w-full flex flex-col sm:flex-row border border-gray-200 m-5 rounded shadow">
         <input
           type="text"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
           className="flex-1 pl-5 py-2.5"
           placeholder="Enter the link"
         />
 
-        <button className="bg-blue-400 font-semibold text-white p-2 rounded-r">
+        <button type="submit" className="bg-blue-400 font-semibold text-white p-2 rounded-r">
           Shorten URL
         </button>
       </form>
