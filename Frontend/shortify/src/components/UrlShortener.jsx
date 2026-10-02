@@ -28,7 +28,7 @@ function UrlShortener() {
           placeholder="Enter the link"
         />
 
-        <button type="submit" className="bg-blue-400 font-semibold text-white p-2 rounded-r">
+        <button type="submit" className="bg-blue-400 hover:bg-blue-500 transition duration-200 font-semibold text-white p-2 rounded-r cursor-pointer">
           Shorten URL
         </button>
       </form>

@@ -1,6 +1,8 @@
 package mrhypix.shortify;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 import java.util.Random;
@@ -62,7 +64,10 @@ public class URLService {
         if (result.isPresent()) {
             return result.get();
         } else {
-            throw new RuntimeException("URL not found");
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Short URL not found"
+            );
         }
     }
 }
