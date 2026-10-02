@@ -1,5 +1,7 @@
-package mrhypix.shortify;
+package mrhypix.shortify.Controller;
 
+import mrhypix.shortify.URLEntity;
+import mrhypix.shortify.URLService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

@@ -54,4 +54,15 @@ public class URLService {
 
         return urlRepository.save(url);
     }
+
+    public URLEntity getURL(String shortCode) {
+        Optional<URLEntity> result =
+                urlRepository.findByShortCode(shortCode);
+
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            throw new RuntimeException("URL not found");
+        }
+    }
 }
