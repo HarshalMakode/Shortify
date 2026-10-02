@@ -11,7 +11,7 @@ public class URLController {
         this.urlService = urlService;
     }
 
-    @PostMapping("shorten")
+    @PostMapping("/shorten")
     public URLEntity shortenURL(@RequestBody String originalURL) {
         return urlService.shortenURL(originalURL);
     }

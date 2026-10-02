@@ -2,6 +2,7 @@ package mrhypix.shortify;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -38,10 +39,16 @@ public class URLService {
     }
 
     public URLEntity shortenURL(String originalURL) {
+
+        Optional<URLEntity> existingURL = urlRepository.findByOriginalURL(originalURL);
+
+        if (existingURL.isPresent()) {
+            return existingURL.get();
+        }
+
         String shortCode = generateUniqueShortCode();
 
         URLEntity url = new URLEntity();
-
         url.setOriginalURL(originalURL);
         url.setShortCode(shortCode);
 
