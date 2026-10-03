@@ -1,12 +1,14 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function UrlShortener() {
+function Counter() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { url, shortUrl } = location.state || {};
+  const { url, shortUrl, shortCode } = location.state || {};
+
   const [copied, setCopied] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(shortUrl);
@@ -17,23 +19,36 @@ function UrlShortener() {
     }, 2000);
   };
 
+  useEffect(() => {
+    const getClickCount = async () => {
+      const response = await fetch(
+        `http://localhost:8081/api/urls/${shortCode}/clicks`
+      );
+
+      const data = await response.json();
+
+      setClickCount(data.clickCount);
+    };
+
+    if (shortCode) {
+      getClickCount();
+    }
+  }, [shortCode]);
+
+
   return (
     <section className="w-full max-w-3xl flex flex-col items-center bg-white py-5 rounded-2xl border border-mist-300 shadow-lg p-13">
-      
       <span className="text-4xl font-bold text-gray-600">
-        Your shortened URL
+        Total URL Clicks
       </span>
 
-      <span className="flex flex-col items-center text-center">
+      <span className="flex flex-col items-center text-center mt-2">
         <span>
-          Copy the short link and share it in messages, texts, posts, websites
-          and other locations.
+          The number of clicks from the shortened URL that redirected the user to the destination page.
         </span>
       </span>
 
-      <form
-        className="w-full flex flex-col sm:flex-row border border-gray-200 m-5 rounded shadow"
-      >
+      <form className="w-full flex flex-col sm:flex-row border border-gray-200 m-5 rounded shadow">
         <input
           type="text"
           value={shortUrl || ""}
@@ -49,25 +64,23 @@ function UrlShortener() {
         >
           {copied ? "Copied!" : "Copy URL"}
         </button>
+
       </form>
 
       <div className="w-full flex flex-col items-start gap-2">
-        <span>Long URL: {url}</span>
+        <span>
+          Long URL: {url}
+        </span>
+
+        <span className="text-2xl font-bold text-gray-600">
+          Count: {clickCount}
+        </span>
 
         <button
           type="button"
-          onClick={() =>
-            navigate("/urlcounter", {
-              state: {
-                url: url,
-                shortUrl: shortUrl,
-                shortCode: shortUrl.split("/").pop(),
-              },
-            })
-          }
           className="bg-blue-400 hover:bg-blue-500 transition duration-200 font-semibold text-white p-2 rounded cursor-pointer"
         >
-          Total of clicks of your short URL
+          Track clicks from another short URL
         </button>
 
         <button
@@ -78,16 +91,8 @@ function UrlShortener() {
           Shorten another URL
         </button>
       </div>
-
-      <span className="flex flex-col items-center text-center mt-4">
-        <span>
-          * Short URLs that do not have at least one click per month are
-          disabled
-        </span>
-      </span>
-
     </section>
   );
 }
 
-export default UrlShortener;
+export default Counter;

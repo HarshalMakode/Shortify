@@ -102,4 +102,19 @@ public class URLService {
             );
         }
     }
+
+    public Long getClickCount(String shortCode) {
+
+        Optional<URLEntity> result =
+                urlRepository.findByShortCode(shortCode);
+
+        if (result.isPresent()) {
+            return result.get().getClickCount();
+        } else {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Short URL not found"
+            );
+        }
+    }
 }
