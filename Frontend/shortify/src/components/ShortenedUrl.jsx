@@ -1,26 +1,20 @@
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 function UrlShortener() {
-  const [url, setUrl] = useState("");
-  const [shortUrl, setShortUrl] = useState("");
-
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const { url, shortUrl } = location.state || {};
+  const [copied, setCopied] = useState(false);
 
-    const response = await fetch("http://localhost:8081/api/shorten", {
-      method: "POST",
-      headers: {
-        "Content-Type": "text/plain",
-      },
-      body: url,
-    });
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(shortUrl);
+    setCopied(true);
 
-    const data = await response.json();
-
-    setShortUrl(`http://localhost:8081/${data.shortCode}`);
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
   };
 
   return (
@@ -38,12 +32,11 @@ function UrlShortener() {
       </span>
 
       <form
-        onSubmit={handleSubmit}
         className="w-full flex flex-col sm:flex-row border border-gray-200 m-5 rounded shadow"
       >
         <input
           type="text"
-          value={shortUrl}
+          value={shortUrl || ""}
           readOnly
           className="flex-1 pl-5 py-2.5"
           placeholder="Your shortened URL"
@@ -51,10 +44,10 @@ function UrlShortener() {
 
         <button
           type="button"
-          onClick={() => navigator.clipboard.writeText(shortUrl)}
+          onClick={handleCopy}
           className="bg-blue-400 hover:bg-blue-500 transition duration-200 font-semibold text-white p-2 rounded-r cursor-pointer"
         >
-          Copy URL
+          {copied ? "Copied!" : "Copy URL"}
         </button>
       </form>
 

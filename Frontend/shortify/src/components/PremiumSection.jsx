@@ -17,7 +17,7 @@ function PremiumSection() {
         </span>
       </span>
 
-      <button className="bg-blue-400 font-semibold text-white py-3 px-5 rounded">
+      <button className="bg-blue-400 hover:bg-blue-500 transition duration-200 font-semibold text-white py-3 px-5 rounded cursor-pointer">
         Create Account
       </button>
 

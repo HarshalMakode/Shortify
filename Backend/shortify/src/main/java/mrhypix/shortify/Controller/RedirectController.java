@@ -23,6 +23,9 @@ public class RedirectController {
     public ResponseEntity<Void> redirect(@PathVariable String shortCode) {
         URLEntity url = urlService.getURL(shortCode);
 
-        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(url.getOriginalURL())).build();
+        return ResponseEntity
+                .status(HttpStatus.FOUND)
+                .location(URI.create(url.getOriginalURL()))
+                .build();
     }
 }
