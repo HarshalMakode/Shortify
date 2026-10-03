@@ -40,9 +40,19 @@ public class URLService {
         return shortCode;
     }
 
+    private String normalizeURL(String originalURL) {
+        if (originalURL.endsWith("/") && originalURL.indexOf("/", 8) == originalURL.length() - 1) {
+            return originalURL.substring(0, originalURL.length() - 1);
+        }
+
+        return originalURL;
+    }
+
     public URLEntity shortenURL(String originalURL) {
 
-        Optional<URLEntity> existingURL = urlRepository.findByOriginalURL(originalURL);
+        String normalizedURL = normalizeURL(originalURL);
+
+        Optional<URLEntity> existingURL = urlRepository.findByOriginalURL(normalizedURL);
 
         if (existingURL.isPresent()) {
             return existingURL.get();
