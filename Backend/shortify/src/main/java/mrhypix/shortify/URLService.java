@@ -80,4 +80,26 @@ public class URLService {
             );
         }
     }
+
+    public URLEntity getURLAndIncrementClick(String shortCode) {
+
+        Optional<URLEntity> result =
+                urlRepository.findByShortCode(shortCode);
+
+        if (result.isPresent()) {
+
+            URLEntity url = result.get();
+
+            url.setClickCount(url.getClickCount() + 1);
+
+            return urlRepository.save(url);
+
+        } else {
+
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Short URL not found"
+            );
+        }
+    }
 }

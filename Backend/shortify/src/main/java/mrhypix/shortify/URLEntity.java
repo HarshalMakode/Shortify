@@ -18,4 +18,7 @@ public class URLEntity {
 
     @Column(name = "short_code", nullable = false, unique = true, length = 7)
     private String shortCode;
+
+    @Column(nullable = false)
+    private Long clickCount = 0L;
 }

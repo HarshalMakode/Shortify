@@ -21,7 +21,8 @@ public class RedirectController {
 
     @GetMapping("/{shortCode}")
     public ResponseEntity<Void> redirect(@PathVariable String shortCode) {
-        URLEntity url = urlService.getURL(shortCode);
+
+        URLEntity url = urlService.getURLAndIncrementClick(shortCode);
 
         return ResponseEntity
                 .status(HttpStatus.FOUND)
