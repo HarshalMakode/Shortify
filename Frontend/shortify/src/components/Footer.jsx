@@ -1,12 +1,14 @@
+import { Link } from "react-router-dom";
+
 function Footer() {
   const links = [
-    "ShortURL",
-    "URL Click Counter",
-    "Unshorten URL",
-    "Report Malicious URL",
-    "Terms of Service",
-    "Privacy",
-    "Contact",
+    { name: "ShortURL", path: "/" },
+    { name: "URL Click Counter", path: "/urltracker" },
+    { name: "Unshorten URL", path: "/unshorten" },
+    { name: "Report Malicious URL", path: "/report" },
+    { name: "Terms of Service", path: "/terms" },
+    { name: "Privacy", path: "/privacy" },
+    { name: "Contact", path: "/contact" },
   ];
 
   return (
@@ -29,13 +31,13 @@ function Footer() {
         <div className="flex flex-col lg:flex-row font-semibold justify-center text-blue-500 divide-y lg:divide-y-0 lg:divide-x divide-black">
 
           {links.map((link) => (
-            <a
-              key={link}
+            <Link
+              key={link.name}
+              to={link.path}
               className="px-3 py-2"
-              href="/"
             >
-              {link}
-            </a>
+              {link.name}
+            </Link>
           ))}
 
         </div>

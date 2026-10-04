@@ -78,6 +78,7 @@ function Counter() {
 
         <button
           type="button"
+          onClick={() => navigate("/urltracker")}
           className="bg-blue-400 hover:bg-blue-500 transition duration-200 font-semibold text-white p-2 rounded cursor-pointer"
         >
           Track clicks from another short URL
