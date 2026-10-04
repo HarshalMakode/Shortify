@@ -10,6 +10,7 @@ import java.util.Map;
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:5173")
 public class URLController {
+
     private final URLService urlService;
 
     public URLController(URLService urlService) {
@@ -27,5 +28,13 @@ public class URLController {
         Long clickCount = urlService.getClickCount(shortCode);
 
         return Map.of("clickCount", clickCount);
+    }
+
+    @GetMapping("/urls/{shortCode}/original")
+    public Map<String, String> getOriginalURL(@PathVariable String shortCode) {
+
+        String originalURL = urlService.getOriginalURL(shortCode);
+
+        return Map.of("originalURL", originalURL);
     }
 }

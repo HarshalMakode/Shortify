@@ -61,7 +61,7 @@ public class URLService {
         String shortCode = generateUniqueShortCode();
 
         URLEntity url = new URLEntity();
-        url.setOriginalURL(originalURL);
+        url.setOriginalURL(normalizedURL);
         url.setShortCode(shortCode);
 
         return urlRepository.save(url);
@@ -110,6 +110,21 @@ public class URLService {
 
         if (result.isPresent()) {
             return result.get().getClickCount();
+        } else {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Short URL not found"
+            );
+        }
+    }
+
+    public String getOriginalURL(String shortCode) {
+
+        Optional<URLEntity> result =
+                urlRepository.findByShortCode(shortCode);
+
+        if (result.isPresent()) {
+            return result.get().getOriginalURL();
         } else {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
