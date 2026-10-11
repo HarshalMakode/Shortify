@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
@@ -8,21 +8,58 @@ function Contact() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [captchaToken, setCaptchaToken] = useState(null);
+  const captchaRef = useRef(null);
+  const [status, setStatus] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setStatus("");
+    setSubmitting(true);
 
-    console.log({
-      name,
-      email,
-      message,
-    });
+    try {
+      const response = await fetch("http://localhost:8081/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          captchaToken,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setStatus(data.message || "Unable to send your message.");
+        captchaRef.current?.resetCaptcha();
+        setCaptchaToken(null);
+        return;
+      }
+
+      setStatus(data.message);
+      setName("");
+      setEmail("");
+      setMessage("");
+      setCaptchaToken(null);
+      captchaRef.current?.resetCaptcha();
+    } catch (error) {
+      setStatus("Unable to connect to the server. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleClear = () => {
     setName("");
     setEmail("");
     setMessage("");
+    setCaptchaToken(null);
+    setStatus("");
+    captchaRef.current?.resetCaptcha();
   };
 
   return (
@@ -74,20 +111,26 @@ function Contact() {
 
               <div className="mb-8">
                 <HCaptcha
-                  sitekey="YOUR_HCAPTCHA_SITE_KEY"
+                  ref={captchaRef}
+                  sitekey="311a7fd0-0412-4d06-85da-3948fe087906"
                   onVerify={(token) => setCaptchaToken(token)}
                   onExpire={() => setCaptchaToken(null)}
                 />
               </div>
 
+              {status && (
+                <p className="mb-4 text-sm" role="status">
+                  {status}
+                </p>
+              )}
+
               <div className="flex justify-center gap-1 max-w-md">
-                
                 <button
                   type="submit"
-                  disabled={!captchaToken}
+                  disabled={!captchaToken || submitting}
                   className="bg-blue-400 hover:bg-blue-500 transition duration-200 font-semibold text-white px-5 py-2.5 rounded cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Send
+                  {submitting ? "Sending..." : "Send"}
                 </button>
 
                 <button
