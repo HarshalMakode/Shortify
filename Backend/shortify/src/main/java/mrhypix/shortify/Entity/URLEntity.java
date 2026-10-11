@@ -1,4 +1,4 @@
-package mrhypix.shortify;
+package mrhypix.shortify.Entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

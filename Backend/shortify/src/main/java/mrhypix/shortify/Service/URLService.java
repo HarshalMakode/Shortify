@@ -1,5 +1,7 @@
-package mrhypix.shortify;
+package mrhypix.shortify.Service;
 
+import mrhypix.shortify.Entity.URLEntity;
+import mrhypix.shortify.Repository.URLRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;

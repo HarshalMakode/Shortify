@@ -1,5 +1,6 @@
-package mrhypix.shortify;
+package mrhypix.shortify.Repository;
 
+import mrhypix.shortify.Entity.URLEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package mrhypix.shortify;
+package mrhypix.shortify.DTO;
 
 public record ContactRequest(
         String name,

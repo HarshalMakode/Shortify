@@ -1,4 +1,4 @@
-package mrhypix.shortify;
+package mrhypix.shortify.Service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;

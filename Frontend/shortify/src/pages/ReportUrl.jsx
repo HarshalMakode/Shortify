@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -6,47 +7,76 @@ function ReportUrl() {
   const [url, setUrl] = useState("");
   const [comment, setComment] = useState("");
   const [answer, setAnswer] = useState("");
+  const [status, setStatus] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setStatus("");
 
     if (Number(answer) !== 8) {
-      alert("Incorrect answer");
+      setStatus("Incorrect answer. Please try again.");
       return;
     }
 
-    console.log({
-      url,
-      comment,
-    });
+    setSubmitting(true);
+
+    try {
+      const response = await fetch(
+        "http://localhost:8081/api/reports",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ url, comment }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setStatus(data.message || "Unable to submit report.");
+        return;
+      }
+
+      setStatus(data.message || "Report submitted successfully.");
+      setUrl("");
+      setComment("");
+      setAnswer("");
+    } catch (error) {
+      setStatus(
+        "Unable to connect to the server. Please try again."
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleClean = () => {
     setUrl("");
     setComment("");
     setAnswer("");
+    setStatus("");
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-cyan-40">
-
       <Header />
 
       <main className="flex flex-col mx-6 items-center">
         <section className="w-full max-w-3xl bg-white rounded-lg border border-gray-200 shadow-md p-7">
+          <h1 className="text-4xl font-bold text-gray-600 mb-2">
+            Report Malicious URL
+          </h1>
 
-           <h1 className="text-4xl font-bold text-gray-600 mb-2">
-          Report Malicious URL
-        </h1>
-
-        <p className=" text-gray-700 leading-relaxed mb-6">
-          Use the form to report URLs suspected of spam, phishing, or
-          malware. Short URLs which redirect to malicious pages or download
-          dangerous files are deleted.
-        </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            Use the form to report URLs suspected of spam, phishing, or
+            malware. Short URLs which redirect to malicious pages or download
+            dangerous files are deleted.
+          </p>
 
           <form onSubmit={handleSubmit}>
-
             <div className="flex flex-col gap-1 mb-5 max-w-md">
               <label className="text-xl">
                 Invalid or malicious URL
@@ -63,9 +93,7 @@ function ReportUrl() {
             </div>
 
             <div className="flex flex-col gap-1 mb-5 max-w-md">
-              <label className="text-xl">
-                Comment
-              </label>
+              <label className="text-xl">Comment</label>
 
               <textarea
                 value={comment}
@@ -76,9 +104,7 @@ function ReportUrl() {
             </div>
 
             <div className="flex items-center gap-2 mb-8">
-              <span className="text-2xl">
-                7 + 1 =
-              </span>
+              <span className="text-2xl">7 + 1 =</span>
 
               <input
                 type="number"
@@ -89,13 +115,23 @@ function ReportUrl() {
               />
             </div>
 
-            <div className="flex justify-center gap-1 max-w-md">
+            {status && (
+              <p
+                role="status"
+                aria-live="polite"
+                className="mb-4 text-sm text-gray-700"
+              >
+                {status}
+              </p>
+            )}
 
+            <div className="flex justify-center gap-1 max-w-md">
               <button
                 type="submit"
-                className="bg-blue-400 hover:bg-blue-500 transition duration-200 font-semibold text-white px-5 py-2.5 rounded cursor-pointer"
+                disabled={submitting}
+                className="bg-blue-400 hover:bg-blue-500 transition duration-200 font-semibold text-white px-5 py-2.5 rounded cursor-pointer disabled:opacity-50"
               >
-                Send
+                {submitting ? "Sending..." : "Send"}
               </button>
 
               <button
@@ -105,17 +141,12 @@ function ReportUrl() {
               >
                 Clean
               </button>
-
             </div>
-
           </form>
-
         </section>
-
       </main>
 
       <Footer />
-
     </div>
   );
 }

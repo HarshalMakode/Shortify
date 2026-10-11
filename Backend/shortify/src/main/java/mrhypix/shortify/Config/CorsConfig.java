@@ -1,4 +1,4 @@
-package mrhypix.shortify;
+package mrhypix.shortify.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

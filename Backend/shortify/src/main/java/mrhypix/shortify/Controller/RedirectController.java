@@ -1,7 +1,7 @@
 package mrhypix.shortify.Controller;
 
-import mrhypix.shortify.URLEntity;
-import mrhypix.shortify.URLService;
+import mrhypix.shortify.Entity.URLEntity;
+import mrhypix.shortify.Service.URLService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,7 +1,7 @@
 package mrhypix.shortify.Controller;
 
-import mrhypix.shortify.ContactRequest;
-import mrhypix.shortify.ContactService;
+import mrhypix.shortify.DTO.ContactRequest;
+import mrhypix.shortify.Service.ContactService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
