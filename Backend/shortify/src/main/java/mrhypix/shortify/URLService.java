@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.net.URI;
 import java.util.Optional;
 import java.util.Random;
 
@@ -49,7 +50,7 @@ public class URLService {
     }
 
     public URLEntity shortenURL(String originalURL) {
-
+        originalURL = validateURL(originalURL);
         String normalizedURL = normalizeURL(originalURL);
 
         Optional<URLEntity> existingURL = urlRepository.findByOriginalURL(normalizedURL);
@@ -129,6 +130,47 @@ public class URLService {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
                     "Short URL not found"
+            );
+        }
+    }
+
+    private String validateURL(String originalURL) {
+        if (originalURL == null || originalURL.isBlank()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "URL cannot be empty"
+            );
+        }
+
+        originalURL = originalURL.trim();
+
+        try {
+            URI uri = URI.create(originalURL);
+
+            String scheme = uri.getScheme();
+
+            if (scheme == null ||
+                    !(scheme.equalsIgnoreCase("http")
+                            || scheme.equalsIgnoreCase("https"))) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Only HTTP and HTTPS URLs are allowed"
+                );
+            }
+
+            if (uri.getHost() == null || uri.getHost().isBlank()) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Please enter a valid URL"
+                );
+            }
+
+            return originalURL;
+
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Please enter a valid URL"
             );
         }
     }

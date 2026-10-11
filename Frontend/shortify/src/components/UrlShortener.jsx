@@ -8,24 +8,40 @@ function UrlShortener() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:8081/api/shorten", {
-      method: "POST",
-      headers: {
-        "Content-Type": "text/plain",
-      },
-      body: url,
-    });
+    try {
+      const response = await fetch("http://localhost:8081/api/shorten", {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain",
+        },
+        body: url,
+      });
 
-    const data = await response.json();
+      if (!response.ok) {
+        const data = await response.json();
+        alert(data.detail || data.message || "Please enter a valid URL.");
+        return;
+      }
 
-    const shortUrl = `http://localhost:8081/${data.shortCode}`;
+      const data = await response.json();
 
-    navigate("/shortenurl", {
-      state: {
-        url: url,
-        shortUrl: shortUrl,
-      },
-    });
+      if (!data.shortCode) {
+        alert("Unable to shorten the URL. Please try again.");
+        return;
+      }
+
+      const shortUrl = `http://localhost:8081/${data.shortCode}`;
+
+      navigate("/shortenurl", {
+        state: {
+          url: url,
+          shortUrl: shortUrl,
+          shortCode: data.shortCode,
+        },
+      });
+    } catch (error) {
+      alert("Unable to connect to the server. Please try again.");
+    }
   };
 
   return (
